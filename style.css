@@ -1,4 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: purple;
-  color: white;
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  height: 10%;
+}
+
+main {
+  width: 1000px;
+  height: 800px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.grid {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  max-height: 600px;
+  max-width: 800px;
+}
+
+.grid div {
+  flex-grow: 1;
+  width: calc(100% / 16);
+  height: calc(100% / 8);
+  border: 1px solid black;
+}
+
+.alien {
+  background: url('images/alien.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.player {
+  background: url('images/spaceship.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
