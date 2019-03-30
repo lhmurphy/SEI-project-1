@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const squares = []
   let bullet = 0
   let playerIndex = 120
+  let bulletLocation = [playerIndex - width]
 
   let aliens = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -54,8 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
   //=========PLAYER BULLETS=========
 
   document.addEventListener('keydown', (e) => {
-    if(e.keyCode === 32){
-      bullet = squares[playerIndex - width].innerText  = '|'
+    let bulletIndex = playerIndex
+    if(e.keyCode === 32) {
+      setInterval(() => {
+        squares[bulletIndex].classList.remove('bullet')
+        bulletIndex -= width
+        squares[bulletIndex].classList.add('bullet')
+      }, 500)
     }
   })
 

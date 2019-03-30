@@ -58,3 +58,10 @@ main {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.bullet {
+  background: url('images/bullet.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
