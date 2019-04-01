@@ -5,8 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const height = 8
   const squares = []
   let playerIndex = 120
+  let score = 0
   //let alienIndex = 0
   //const bulletLocation = [playerIndex - width]
+
+  const scoreDiv = document.getElementById('score')
 
   const alienMovement = [1, 1, 1, 1, width, -1, -1, -1, -1, width]
   let currentMove = 0
@@ -54,13 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         break
     }
   })
-
   //=========PLAYER BULLETS=========
 
   document.addEventListener('keydown', (e) => {
     let bulletIndex = playerIndex
     if(e.keyCode === 32) {
-      setInterval(() => {
+      const bulletInterval = setInterval(() => {
         if (bulletIndex - width >= 0) {
           squares[bulletIndex].classList.remove('bullet')
           bulletIndex -= width
@@ -68,8 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           squares[bulletIndex].classList.remove('bullet')
         }
+
+        if(squares[bulletIndex].classList.contains('alien')) {
+          squares[bulletIndex].classList.remove('bullet')
+          score++
+          scoreDiv.innerHTML = score
+          clearInterval(bulletInterval)
+
+          const index = aliens.indexOf(bulletIndex)
+          aliens.splice(index,1)
+
+          squares[bulletIndex].classList.remove('alien')
+          squares[bulletIndex].classList.remove('bullet')
+
+        }
       }, 200)
     }
+
   })
 
   //=========ALIENS=========
@@ -81,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[alienIndex].classList.add('alien')
   })
 
-  const interval = setInterval(() => {
+  const aliensInterval = setInterval(() => {
     aliens.forEach(alienIndex => {
       squares[alienIndex].classList.remove('alien')
     })
@@ -100,25 +117,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if(currentMove === alienMovement.length) {
       currentMove = 0
     }
-    if(aliens.some(alien => alien >= 127)) clearInterval(interval)
+    if(aliens.some(alien => alien >= 127)) clearInterval(aliensInterval)
 
   }, 1000)
 
   //=========ALIENS BULLETS=========
 
   function alienBombs() {
-    setInterval(() => {
+    const alienBombInterval = setInterval(() => {
     // pick random number - math.random
       let randomAlien = aliens[Math.floor(Math.random() * aliens.length)]
-      console.log(randomAlien)
 
       setInterval(() => {
-        squares[randomAlien].classList.remove('bomb')
-        randomAlien += width
-        squares[randomAlien].classList.add('bomb')
-      }, 500)
-    }, 2000)
+        if(randomAlien + width <= 127) {
+          squares[randomAlien].classList.remove('bomb')
+          randomAlien += width
+          squares[randomAlien].classList.add('bomb')
+        } else {
+          squares[randomAlien].classList.remove('bomb')
+        }
+        if(squares[randomAlien].classList.contains('player')) {
+          squares[randomAlien].classList.remove('player')
+          squares[randomAlien].classList.remove('bomb')
 
+          clearInterval(alienBombInterval)
+          clearInterval(aliensInterval)
+        }
+      }, 500)
+
+    }, 2000)
     // link that random number with alienIndex
     // assign random number to the aliens
     // add set interval to the random number and remove/add class
@@ -129,12 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // DO NOT REMOVE BRACKETS BELOW
 })
-
-
-
-
-
-
 
 
 // so stuck on how to use the updated map array the then move all the alies down a row and then move them back across the other way
