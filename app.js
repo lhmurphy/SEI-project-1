@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //let alienIndex = 0
   //const bulletLocation = [playerIndex - width]
 
-  //let testAliens = [54, 55, 56]
+  const alienMovement = [1, 1, 1, 1, width, -1, -1, -1, -1, width]
+  let currentMove = 0
 
   let aliens = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
@@ -60,102 +61,80 @@ document.addEventListener('DOMContentLoaded', () => {
     let bulletIndex = playerIndex
     if(e.keyCode === 32) {
       setInterval(() => {
-        squares[bulletIndex].classList.remove('bullet')
-        bulletIndex -= width
-        squares[bulletIndex].classList.add('bullet')
-      }, 500)
+        if (bulletIndex - width >= 0) {
+          squares[bulletIndex].classList.remove('bullet')
+          bulletIndex -= width
+          squares[bulletIndex].classList.add('bullet')
+        } else {
+          squares[bulletIndex].classList.remove('bullet')
+        }
+      }, 200)
     }
   })
 
   //=========ALIENS=========
 
+  // when alien array reaches width-1 (15), need to plus 16 to whole array
+  // then need to move aliens alienIndex-- each time
+
   aliens.forEach(alienIndex => {
     squares[alienIndex].classList.add('alien')
   })
 
-  function aliensRight() {
-    // loop over aliens array and remove alien class from current squares
+  const interval = setInterval(() => {
     aliens.forEach(alienIndex => {
       squares[alienIndex].classList.remove('alien')
     })
     // update array with plus 1 index
-    aliens = aliens.map(alienIndex => alienIndex + 1)
+    aliens = aliens.map(alienIndex => alienIndex + alienMovement[currentMove])
 
     // loop over array again and add class of alien to new squares
     aliens.forEach(alienIndex => {
       squares[alienIndex].classList.add('alien')
     })
 
+    currentMove++
+    // console.log(currentMove)
+    // console.log(aliens)
 
-  }
-
-  function aliensLeft() {
-
-    // loop over aliens array and remove alien class from current squares
-    aliens.forEach(alienIndex => {
-      squares[alienIndex].classList.remove('alien')
-    })
-    // update array with plus 1 index
-    aliens = aliens.map(alienIndex => alienIndex - 1)
-
-    // loop over array again and add class of alien to new squares
-    aliens.forEach(alienIndex => {
-      squares[alienIndex].classList.add('alien')
-    })
-  }
-
-  var interval = setInterval(() => {
-    aliensRight()
-    const lastAlienIndex = aliens[0]
-    if(
-      aliens[lastAlienIndex] === 10
-    ) {
-
-      aliens.forEach(alienIndex => {
-        squares[alienIndex].classList.remove('alien')
-      })
-      aliens = aliens.map(alienIndex => alienIndex + 16)
-
-
-      clearInterval(interval)
-
-      aliensLeft()
-      setInterval(aliensLeft, 1000)
-      // aliens.forEach(alienIndex => {
-      //   squares[alienIndex].classList.add('alien')
-      // })
-      console.log(aliensLeft)
-      console.log(aliens)
+    if(currentMove === alienMovement.length) {
+      currentMove = 0
     }
-
-    // when alien array reaches width-1 (15), need to plus 16 to whole array
-    // then need to move aliens alienIndex-- each time
+    if(aliens.some(alien => alien >= 127)) clearInterval(interval)
 
   }, 1000)
 
+  //=========ALIENS BULLETS=========
 
+  function alienBombs() {
+    setInterval(() => {
+    // pick random number - math.random
+      let randomAlien = aliens[Math.floor(Math.random() * aliens.length)]
+      console.log(randomAlien)
 
-  // //=========TEST ALIENS=========
-  //
-  // testAliens.forEach(testAlienIndex => {
-  //   squares[testAlienIndex].classList.add('alien')
-  // })
-  //
-  // setInterval(() => {
-  //   testAliens.forEach(testAlienIndex => {
-  //     squares[testAlienIndex].classList.remove('alien')
-  //   })
-  //   testAliens = testAliens.map(testAlienIndex => testAlienIndex - 1)
-  //
-  //   // loop over array again and add class of alien to new squares
-  //   testAliens.forEach(testAlienIndex => {
-  //     squares[testAlienIndex].classList.add('alien')
-  //   })
-  // }, 200)
+      setInterval(() => {
+        squares[randomAlien].classList.remove('bomb')
+        randomAlien += width
+        squares[randomAlien].classList.add('bomb')
+      }, 500)
+    }, 2000)
+
+    // link that random number with alienIndex
+    // assign random number to the aliens
+    // add set interval to the random number and remove/add class
+  }
+
+  alienBombs()
 
 
 // DO NOT REMOVE BRACKETS BELOW
 })
+
+
+
+
+
+
 
 
 // so stuck on how to use the updated map array the then move all the alies down a row and then move them back across the other way

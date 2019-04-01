@@ -65,3 +65,10 @@ main {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.bomb {
+  background: url('images/bomb.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
