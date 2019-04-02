@@ -6,11 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const squares = []
   let playerIndex = 120
   let score = 0
-  //let alienIndex = 0
-  //const bulletLocation = [playerIndex - width]
+  let playerLives = 3
 
-  const scoreDiv = document.getElementById('score')
+  const scoreDiv = document.querySelector('.score')
+  const playerLivesDiv = document.querySelector('.lives')
 
+  // new array to add to aliens.map, this moves the array along 4 and then down 16
   const alienMovement = [1, 1, 1, 1, width, -1, -1, -1, -1, width]
   let currentMove = 0
 
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //=========GRID=========
 
+  // grid array creating each div
   for(let i = 0; i < width * height; i++) {
     const square = document.createElement('div')
     squares.push(square)
@@ -30,18 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //=========PLAYER=========
 
+  // add player class to player index of 120 (hard coded in variables)
   squares[playerIndex].classList.add('player')
 
+  // find the square that contains player then remove it and add at the new playerIndex
   function playerMove(){
     const player = squares.find(square => square.classList.contains('player'))
     player.classList.remove('player')
     squares[playerIndex].classList.add('player')
   }
 
+  // event listener on player left and right
   document.addEventListener('keydown', (e) => {
     switch(e.keyCode) {
       case 37:
-      //left
+      //left if the location of player is divisble by the width
         if (playerIndex % width > 0) {
           playerIndex--
           playerMove()
@@ -57,32 +62,42 @@ document.addEventListener('DOMContentLoaded', () => {
         break
     }
   })
+
   //=========PLAYER BULLETS=========
 
+  // event listener on spacebar
   document.addEventListener('keydown', (e) => {
+    // give bullet index the same location as the player index
     let bulletIndex = playerIndex
     if(e.keyCode === 32) {
+      // give the bullet interval a setinterval variable to clear later
       const bulletInterval = setInterval(() => {
+        // if location of bullet minus 16 is great than or equal to zero then minus one each time to go up the page
         if (bulletIndex - width >= 0) {
           squares[bulletIndex].classList.remove('bullet')
           bulletIndex -= width
           squares[bulletIndex].classList.add('bullet')
         } else {
+          // remove bullets once they get below 0 (off the top of page)
           squares[bulletIndex].classList.remove('bullet')
         }
 
+        // if bullet location contains alien, plus score
         if(squares[bulletIndex].classList.contains('alien')) {
           squares[bulletIndex].classList.remove('bullet')
           score++
           scoreDiv.innerHTML = score
-          clearInterval(bulletInterval)
 
+          clearInterval(bulletInterval)
+          // find the index of bullet index within the aliens array
           const index = aliens.indexOf(bulletIndex)
+          console.log(bulletIndex)
+          // remove the found index from the array
           aliens.splice(index,1)
 
+          // remove both the alien and the bullet
           squares[bulletIndex].classList.remove('alien')
           squares[bulletIndex].classList.remove('bullet')
-
         }
       }, 200)
     }
@@ -110,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       squares[alienIndex].classList.add('alien')
     })
 
+    //
     currentMove++
     // console.log(currentMove)
     // console.log(aliens)
@@ -121,15 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }, 1000)
 
-  //=========ALIENS BULLETS=========
+  //=========ALIEN BOMBS=========
 
   function alienBombs() {
-    const alienBombInterval = setInterval(() => {
+    const randomAlienInterval = setInterval(() => {
     // pick random number - math.random
       let randomAlien = aliens[Math.floor(Math.random() * aliens.length)]
 
-      setInterval(() => {
-        if(randomAlien + width <= 127) {
+      const bombInterval = setInterval(() => {
+        if(randomAlien <= 127) {
           squares[randomAlien].classList.remove('bomb')
           randomAlien += width
           squares[randomAlien].classList.add('bomb')
@@ -137,24 +153,24 @@ document.addEventListener('DOMContentLoaded', () => {
           squares[randomAlien].classList.remove('bomb')
         }
         if(squares[randomAlien].classList.contains('player')) {
-          squares[randomAlien].classList.remove('player')
+          playerLives--
+          playerLivesDiv.innerHTML = playerLives
           squares[randomAlien].classList.remove('bomb')
+          clearInterval(bombInterval)
 
-          clearInterval(alienBombInterval)
+        }
+        if(playerLives === 0){
+          clearInterval(randomAlienInterval)
           clearInterval(aliensInterval)
+          squares[randomAlien].classList.remove('player')
         }
       }, 500)
-
     }, 2000)
-    // link that random number with alienIndex
-    // assign random number to the aliens
-    // add set interval to the random number and remove/add class
   }
-
   alienBombs()
 
 
-// DO NOT REMOVE BRACKETS BELOW
+//============DO NOT REMOVE BRACKETS BELOW
 })
 
 
