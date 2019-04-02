@@ -94,14 +94,20 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(bulletIndex)
           // remove the found index from the array
           aliens.splice(index,1)
+          if(squares[bulletIndex].classList.contains('alien')) {
+            squares[bulletIndex].classList.add('explode')
+          }
+          setInterval(() => {
+            squares[bulletIndex].classList.remove('explode')
+          }, 100)
 
           // remove both the alien and the bullet
           squares[bulletIndex].classList.remove('alien')
           squares[bulletIndex].classList.remove('bullet')
+
         }
       }, 200)
     }
-
   })
 
   //=========ALIENS=========
@@ -127,8 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //
     currentMove++
-    // console.log(currentMove)
-    // console.log(aliens)
 
     if(currentMove === alienMovement.length) {
       currentMove = 0
@@ -167,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500)
     }, 2000)
   }
+
+
+
   alienBombs()
 
 

@@ -3,12 +3,20 @@
 }
 
 body {
-  align-items: center;
+  align-items: left;
   display: flex;
   height: 100vh;
   justify-content: center;
   flex-direction: column;
   margin: 0;
+  padding: 10px;
+  background: url('images/lucha-libre2.jpg');
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-size: 25px;
+  font-family: 'Ultra', serif;
+  color: #f56a6d;
 }
 
 header {
@@ -22,7 +30,7 @@ main {
   height: 800px;
   align-items: center;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0;
 }
 
@@ -46,21 +54,21 @@ main {
 }
 
 .alien {
-  background: url('images/alien.jpg');
+  background: url('images/luche-alien.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .player {
-  background: url('images/spaceship.png');
+  background: url('images/player-gloves.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .bullet {
-  background: url('images/bullet.png');
+  background: url('images/exploding-glove.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -68,6 +76,13 @@ main {
 
 .bomb {
   background: url('images/bomb.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.explode {
+  background: url('images/explosion.jpg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
