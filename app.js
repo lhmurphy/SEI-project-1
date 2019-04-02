@@ -1,12 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const grid = document.querySelector('.grid')
+  const main = document.querySelector('main')
+  const totalScore = document.querySelector('.score-total')
+  const playAgainDiv = document.querySelector('.play-again')
+
+
   const width = 16
   const height = 8
   const squares = []
   let playerIndex = 120
   let score = 0
   let playerLives = 3
+  let gameInPlay = true
 
   const scoreDiv = document.querySelector('.score')
   const playerLivesDiv = document.querySelector('.lives')
@@ -21,14 +27,33 @@ document.addEventListener('DOMContentLoaded', () => {
     32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
   ]
 
+  // this function will bring up the end of game page with: final score, play again button to refresh screen
+  function endGame() {
+    grid.remove('.grid')
+    playAgainDiv.innerText = 'Play again?'
+    totalScore.innerText = `Your score: ${score}`
+    // totalScore.innerText = `Your score: ${score}`
+  }
+
+  function createAlien() {
+    aliens.forEach(alienIndex => {
+      squares[alienIndex].classList.add('alien')
+    })
+  }
+
+  function createGrid() {
+    for(let i = 0; i < width * height; i++) {
+      const square = document.createElement('div')
+      squares.push(square)
+      grid.appendChild(square)
+    }
+  }
+
+  // need play again function with: new grid, restart aliens moving, score at zero, lives at 3
+
   //=========GRID=========
 
-  // grid array creating each div
-  for(let i = 0; i < width * height; i++) {
-    const square = document.createElement('div')
-    squares.push(square)
-    grid.appendChild(square)
-  }
+  createGrid() // put this into a newGame function
 
   //=========PLAYER=========
 
@@ -81,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
           // remove bullets once they get below 0 (off the top of page)
           squares[bulletIndex].classList.remove('bullet')
         }
-
         // if bullet location contains alien, plus score
         if(squares[bulletIndex].classList.contains('alien')) {
           squares[bulletIndex].classList.remove('bullet')
@@ -91,9 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
           clearInterval(bulletInterval)
           // find the index of bullet index within the aliens array
           const index = aliens.indexOf(bulletIndex)
-          console.log(bulletIndex)
           // remove the found index from the array
           aliens.splice(index,1)
+          // if bullet index contains alien, add explode class
           if(squares[bulletIndex].classList.contains('alien')) {
             squares[bulletIndex].classList.add('explode')
           }
@@ -112,24 +136,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //=========ALIENS=========
 
-  // when alien array reaches width-1 (15), need to plus 16 to whole array
-  // then need to move aliens alienIndex-- each time
+  // create aliens
+  createAlien()
 
-  aliens.forEach(alienIndex => {
-    squares[alienIndex].classList.add('alien')
-  })
-
+  // set interval on aliens
   const aliensInterval = setInterval(() => {
+    // in each alien...
     aliens.forEach(alienIndex => {
+      // remove all the aliens first
       squares[alienIndex].classList.remove('alien')
     })
-    // update array with plus 1 index
+    // update the array with plus 1 to each alien index
     aliens = aliens.map(alienIndex => alienIndex + alienMovement[currentMove])
 
     // loop over array again and add class of alien to new squares
-    aliens.forEach(alienIndex => {
-      squares[alienIndex].classList.add('alien')
-    })
+    createAlien()
 
     //
     currentMove++
@@ -145,34 +166,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function alienBombs() {
     const randomAlienInterval = setInterval(() => {
-    // pick random number - math.random
+    // pick random alien - math.random
       let randomAlien = aliens[Math.floor(Math.random() * aliens.length)]
 
       const bombInterval = setInterval(() => {
+        // if the randomly selected alien is less than the numbers on the grid (it appears on the grid)
         if(randomAlien <= 127) {
+          // remove the bomb
           squares[randomAlien].classList.remove('bomb')
+          // inscreade the alien by width (make it do down one row each time)
           randomAlien += width
+          // add the bomb at the new index
           squares[randomAlien].classList.add('bomb')
         } else {
+          // if the bomb is off the page then remove the bomb (this should stop the errors BUT IT DOES NOT)
           squares[randomAlien].classList.remove('bomb')
         }
+        // if the bomb hits the player (which is the incrementing location of the random alien bomb)
         if(squares[randomAlien].classList.contains('player')) {
+          // decrease lives by 1 each time
           playerLives--
+          // show current lives on screen
           playerLivesDiv.innerHTML = playerLives
+          // remove bomb
           squares[randomAlien].classList.remove('bomb')
+          // stop bomb interval
           clearInterval(bombInterval)
 
         }
+        // if all player lives are gone
         if(playerLives === 0){
+          // add class of boom to randomalien
+          squares[randomAlien].classList.add('boom')
           clearInterval(randomAlienInterval)
           clearInterval(aliensInterval)
+          clearInterval(bombInterval)
           squares[randomAlien].classList.remove('player')
+          gameInPlay = false
+
+          //
+          setTimeout(() => {
+            endGame()
+          }, 1500)
         }
       }, 500)
     }, 2000)
   }
-
-
 
   alienBombs()
 

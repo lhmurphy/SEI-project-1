@@ -14,9 +14,9 @@ body {
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
-  font-size: 25px;
+  font-size: 35px;
   font-family: 'Ultra', serif;
-  color: #f56a6d;
+  color: #FF0046;
 }
 
 header {
@@ -36,21 +36,19 @@ main {
 
 .grid {
   align-items: center;
-  border: 1px solid black;
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
   height: 100%;
   justify-content: center;
   max-height: 600px;
-  max-width: 800px;
+  max-width: 850px;
 }
 
 .grid div {
   flex-grow: 1;
   width: calc(100% / 16);
   height: calc(100% / 8);
-  border: 1px solid black;
 }
 
 .alien {
@@ -87,3 +85,19 @@ main {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.boom {
+  background: url('images/boom2.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.play-again-container {
+  display: block;
+  align-items: center;
+}
+
+/* .play-again {
+  display: none;
+} */
