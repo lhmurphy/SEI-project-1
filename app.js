@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const grid = document.querySelector('.grid')
-  const main = document.querySelector('main')
   const totalScore = document.querySelector('.score-total')
   const playAgainDiv = document.querySelector('.play-again')
 
@@ -12,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let playerIndex = 120
   let score = 0
   let playerLives = 3
-  let gameInPlay = true
+  //let gameInPlay = true
 
   const scoreDiv = document.querySelector('.score')
   const playerLivesDiv = document.querySelector('.lives')
@@ -29,10 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // this function will bring up the end of game page with: final score, play again button to refresh screen
   function endGame() {
-    grid.remove('.grid')
-    playAgainDiv.innerText = 'Play again?'
-    totalScore.innerText = `Your score: ${score}`
-    // totalScore.innerText = `Your score: ${score}`
+    //gameInPlay = false
+    clearInterval(aliensInterval)
+    setTimeout(() => {
+      grid.remove('.grid')
+      playAgainDiv.innerText = 'You lost! Play again?'
+      totalScore.innerText = `Your score: ${score}`
+      // totalScore.innerText = `Your score: ${score}`
+    }, 1500)
   }
 
   function createAlien() {
@@ -48,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
       grid.appendChild(square)
     }
   }
+
+
 
   // need play again function with: new grid, restart aliens moving, score at zero, lives at 3
 
@@ -139,27 +144,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // create aliens
   createAlien()
 
-  // set interval on aliens
+  // set moving interval on all aliens
   const aliensInterval = setInterval(() => {
-    // in each alien...
+    // for each alien...
     aliens.forEach(alienIndex => {
       // remove all the aliens first
       squares[alienIndex].classList.remove('alien')
     })
     // update the array with plus 1 to each alien index
     aliens = aliens.map(alienIndex => alienIndex + alienMovement[currentMove])
-
     // loop over array again and add class of alien to new squares
     createAlien()
-
-    //
+    // increase the current move by 1
     currentMove++
-
+    //
     if(currentMove === alienMovement.length) {
+      //
       currentMove = 0
     }
-    if(aliens.some(alien => alien >= 127)) clearInterval(aliensInterval)
-
+    // if some of the aliens reach the furthest most point in the grid, then end the game
+    if(aliens.some(alien => alien >= 127)) {
+      endGame()
+    }
   }, 1000)
 
   //=========ALIEN BOMBS=========
@@ -195,19 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
         // if all player lives are gone
-        if(playerLives === 0){
+        if (playerLives === 0) {
           // add class of boom to randomalien
           squares[randomAlien].classList.add('boom')
-          clearInterval(randomAlienInterval)
-          clearInterval(aliensInterval)
-          clearInterval(bombInterval)
           squares[randomAlien].classList.remove('player')
-          gameInPlay = false
-
-          //
-          setTimeout(() => {
-            endGame()
-          }, 1500)
+          clearInterval(randomAlienInterval)
+          clearInterval(bombInterval)
+          // gameInPlay = false
+          endGame()
         }
       }, 500)
     }, 2000)
