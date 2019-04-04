@@ -8,27 +8,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const playerLivesDiv = document.querySelector('.lives')
   const start = document.querySelector('.start')
   const board = document.querySelector('.board')
-  let randomAlienInterval
-  let aliensInterval
   const width = 16
   const height = 8
   const squares = []
-  let playerIndex = 120
-  let score = 0
-  let playerLives = 3
-  let gameInPlay = false
-  // new array to add to aliens.map, this moves the array along 4 and then down 16
   const alienMovement = [1, 1, 1, 1, width, -1, -1, -1, -1, width]
-  let currentMove = 0
   const alienStart = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
     32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
   ]
+  let currentMove = 0
+  let randomAlienInterval
+  let aliensInterval
+  let playerIndex = 120
+  let score = 0
+  let playerLives = 3
+  let gameInPlay = false
   let aliens = alienStart.slice()
-  let bulletIntervals = []
+  // let bulletIntervals = []
 
-  // start game title
   start.innerText = 'Click here to play'
 
   function setAlienClass() {
@@ -39,18 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function clearClass(className){
-    document.querySelectorAll(`.${className}`).forEach((element, i) => {
-      console.log(`clearing ${className} on ${i}`)
+    squares.forEach(element => {
       element.classList.remove(className)
     })
   }
 
-  // this function will bring up the end of game page with: final score, play again button to refresh screen
   function endGame() {
     gameInPlay = false
     aliens = alienStart.slice()
     console.log('endgame running')
     clearInterval(aliensInterval)
+    clearInterval(randomAlienInterval)
     clearInterval(moveAliens)
     clearClass('alien')
     clearClass('bomb')
@@ -61,16 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.classList.add('hidden')
     board.classList.add('hidden')
     start.innerText = 'Click here to play'
-    // document.querySelectorAll('.alien').forEach(alien => {
-    //   alien.classList.remove('alien')
-    //   console.log('removed')
-    // })
   }
 
   // play again function will show at end of game with: new grid, restart aliens moving, score at zero, lives at 3
 
   // this will be same function as startGame
   function startGame() {
+    clearClass('alien')
+    clearClass('bomb')
+    clearClass('bullet')
+    clearClass('boom')
+    clearClass('player')
     gameInPlay = true
     setAlienClass()
     aliensInterval = setInterval(moveAliens, 800)
@@ -78,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     score = 0
     playerLives = 3
     currentMove = 0
-    bulletIntervals.forEach(bulletInterval => clearInterval(bulletInterval))
-    bulletIntervals = []
+    // bulletIntervals.forEach(bulletInterval => clearInterval(bulletInterval))
+    // bulletIntervals = []
     scoreDiv.innerText = 0
     playerLivesDiv.innerText = 3
     randomAlienInterval = setInterval(alienBombs, 1000)
@@ -176,23 +174,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if(!gameInPlay) clearInterval(bulletInterval)
       }, 200)
-      //bulletIntervals.push(bulletInterval)
+      // bulletIntervals.push(bulletInterval)
     }
   }
 
   //=========ALIENS=========
 
-  //  setAlienClass()
-  // set moving interval on all aliens
-  // move into moveAliens function
-  // for each alien...
-  // const aliensInterval = setInterval(moveAliens, 1000)
-
   function moveAliens() {
-    // aliens.forEach(alienIndex => {  // set interval moves out and call moveAliens within
-    //   // remove all the aliens first
-    //   squares[alienIndex].classList.remove('alien')
-    // })
     setAlienClass()
     // update the array with plus 1 to each alien index
     aliens = aliens.map(alienIndex => alienIndex + alienMovement[currentMove])
@@ -211,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
       playAgainDiv.classList.remove('hidden')
       totalScore.classList.remove('hidden')
       loseDiv.innerText = 'You lost!'
+      loseDiv.classList.remove('hidden')
       playAgainDiv.innerText = 'Play again?'
       totalScore.innerHTML = `Your score: ${score}`
       endGame()
@@ -220,7 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if(aliens.length === 0) {
       playAgainDiv.classList.remove('hidden')
       totalScore.classList.remove('hidden')
-      loseDiv.innerText = 'You lost!'
+      loseDiv.innerText = 'You\'re a winner!'
+      loseDiv.classList.remove('hidden')
       playAgainDiv.innerText = 'Play again?'
       totalScore.innerHTML = `Your score: ${score}`
       endGame()
@@ -245,6 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
     playerLives--
     // show current lives on screen
     playerLivesDiv.innerHTML = playerLives
+    squares[playerIndex].classList.add('boom')
+    setTimeout(() => {
+      squares[playerIndex].classList.remove('boom')
+    }, 100)
   }
 
   function alienBombs() {
@@ -281,7 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // if all player lives are gone
       if (playerLives === 0) {
-        squares[playerIndex].classList.add('boom')
         playAgainDiv.classList.remove('hidden')
         playAgainDiv.innerText = 'Play again?'
         totalScore.classList.remove('hidden')
@@ -292,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
         squares[randomAlien].classList.remove('bomb')
         clearInterval(randomAlienInterval)
         clearInterval(bombInterval)
-        // gameInPlay = false
         endGame()
       }
     }, 500)
@@ -302,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', startGame)
   playAgainDiv.addEventListener('click', startGame)
 
-//============DO NOT REMOVE BRACKETS BELOW
+  //============DO NOT REMOVE BRACKETS BELOW
 
 })
 
