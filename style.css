@@ -9,8 +9,8 @@ body {
   justify-content: center;
   flex-direction: column;
   margin: 0;
-  padding: 20px;
-  background: url('images/lucha-libre.png');
+  padding: 30px;
+  background: url('images/lucha-libre2.png');
   background-color: #a9dcfc;
   background-position: right;
   background-repeat: no-repeat;
@@ -59,8 +59,16 @@ main {
   background-repeat: no-repeat;
 }
 
+.start {
+  border: 1px solid black;
+  border-radius: 50px;
+  padding: 15px;
+  box-shadow: 1px 5px #4482ac;
+}
+
 .start:hover {
-  color: #4482ac;
+  background-color: #eeeeee;
+;
 }
 
 .alien {
@@ -91,6 +99,13 @@ main {
   display: none!important;
 }
 
+.play-again {
+  border: 1px solid black;
+  border-radius: 50px;
+  padding: 15px;
+  box-shadow: 1px 5px #4482ac;
+}
+
 .play-again:hover {
-  color: #4482ac;
+  background-color: #eeeeee;
 }

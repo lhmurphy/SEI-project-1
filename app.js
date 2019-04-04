@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  const board = document.querySelector('.board')
+  const start = document.querySelector('.start')
   const grid = document.querySelector('.grid')
   const totalScore = document.querySelector('.score-total')
   const playAgainDiv = document.querySelector('.play-again')
   const loseDiv = document.querySelector('.you-lose')
   const scoreDiv = document.querySelector('.score')
   const playerLivesDiv = document.querySelector('.lives')
-  const start = document.querySelector('.start')
-  const board = document.querySelector('.board')
   const width = 16
   const height = 8
   const squares = []
@@ -17,15 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
     16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
     32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
   ]
+  let gameInPlay = false
   let currentMove = 0
   let randomAlienInterval
   let aliensInterval
   let playerIndex = 120
   let score = 0
   let playerLives = 3
-  let gameInPlay = false
   let aliens = alienStart.slice()
-  // let bulletIntervals = []
 
   start.innerText = 'Click here to play'
 
@@ -42,42 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  function endGame() {
-    gameInPlay = false
-    aliens = alienStart.slice()
-    console.log('endgame running')
-    clearInterval(aliensInterval)
-    clearInterval(randomAlienInterval)
-    clearInterval(moveAliens)
-    clearClass('alien')
-    clearClass('bomb')
-    clearClass('bullet')
-    clearClass('boom')
-    clearClass('player')
-    removeEvents()
-    grid.classList.add('hidden')
-    board.classList.add('hidden')
-    start.innerText = 'Click here to play'
-  }
-
-  // play again function will show at end of game with: new grid, restart aliens moving, score at zero, lives at 3
-
-  // this will be same function as startGame
   function startGame() {
+    gameInPlay = true
     clearClass('alien')
     clearClass('bomb')
     clearClass('bullet')
     clearClass('boom')
     clearClass('player')
-    gameInPlay = true
     setAlienClass()
     aliensInterval = setInterval(moveAliens, 800)
     playerIndex = 120
     score = 0
     playerLives = 3
     currentMove = 0
-    // bulletIntervals.forEach(bulletInterval => clearInterval(bulletInterval))
-    // bulletIntervals = []
     scoreDiv.innerText = 0
     playerLivesDiv.innerText = 3
     randomAlienInterval = setInterval(alienBombs, 1000)
@@ -90,6 +66,25 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[playerIndex].classList.add('player')
     addEvents()
   }
+
+  function endGame() {
+    gameInPlay = false
+    clearClass('alien')
+    clearClass('bomb')
+    clearClass('bullet')
+    clearClass('boom')
+    clearClass('player')
+    aliens = alienStart.slice()
+    console.log('endgame running')
+    clearInterval(aliensInterval)
+    clearInterval(randomAlienInterval)
+    clearInterval(moveAliens)
+    removeEvents()
+    grid.classList.add('hidden')
+    board.classList.add('hidden')
+    start.innerText = 'Click here to play'
+  }
+
 
   //=========GRID=========
 
