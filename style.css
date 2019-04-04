@@ -9,8 +9,9 @@ body {
   justify-content: center;
   flex-direction: column;
   margin: 0;
-  padding: 10px;
-  background: url('images/lucha-libre2.jpg');
+  padding: 20px;
+  background: url('images/lucha-libre.png');
+  background-color: #a9dcfc;
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
@@ -21,8 +22,11 @@ body {
 
 header {
   align-items: center;
+  font-size: 90px;
   display: flex;
   height: 10%;
+  flex-wrap: wrap;
+  max-width: 800px;
 }
 
 main {
@@ -35,6 +39,7 @@ main {
 }
 
 .grid {
+  padding-top: 100px;
   align-items: center;
   display: flex;
   flex-grow: 1;
@@ -52,7 +57,7 @@ main {
 }
 
 .alien {
-  background: url('images/luche-alien.png');
+  background: url('images/blue-mask.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -66,7 +71,7 @@ main {
 }
 
 .bullet {
-  background: url('images/exploding-glove.png');
+  background: url('images/exploding-glove2.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -93,11 +98,12 @@ main {
   background-repeat: no-repeat;
 }
 
-.play-again-container {
-  display: block;
-  align-items: center;
-}
+
 
 /* .play-again {
   display: none;
 } */
+
+.hidden {
+  display: none!important;
+}

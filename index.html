@@ -8,15 +8,20 @@
   <link href="https://fonts.googleapis.com/css?family=Ultra" rel="stylesheet">
 </head>
 <body>
-  <header>LUCHA LIBRE INVADERS</header>
-  <p>Score: <span class="score">0</span></p>
-  <p>Lives: <span class="lives">3</span></p>
+  <header>LUCHA LIBRE INVADERS
+  </header>
   <main>
-    <div class="grid"></div>
+    <div class="board hidden">
+      <p>Score: <span class="score">0</span></p>
+      <p>Lives: <span class="lives">3</span></p>
+    </div>
+    <div class="grid hidden"></div>
     <div class="play-again-container">
-      <div class="play-again"> </div>
+      <div class="you-lose"></div>
+      <div class="play-again"></div>
       <div class="score-total"></div>
     </div>
+    <div class="start"></div>
 
   </main>
 </body>
