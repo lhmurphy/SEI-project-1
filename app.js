@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loseDiv = document.querySelector('.you-lose')
   const scoreDiv = document.querySelector('.score')
   const playerLivesDiv = document.querySelector('.lives')
+  const introDiv = document.querySelector('.intro')
   const width = 16
   const height = 8
   const squares = []
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let playerLives = 3
   let aliens = alienStart.slice()
 
-  start.innerText = 'Click here to play'
+  // start.innerText = 'Click here to play'
 
   function setAlienClass() {
     aliens.forEach(alienIndex => {
@@ -50,20 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
     clearClass('player')
     setAlienClass()
     aliensInterval = setInterval(moveAliens, 800)
+    randomAlienInterval = setInterval(alienBombs, 1000)
     playerIndex = 120
     score = 0
     playerLives = 3
     currentMove = 0
     scoreDiv.innerText = 0
     playerLivesDiv.innerText = 3
-    randomAlienInterval = setInterval(alienBombs, 1000)
-    grid.classList.remove('hidden')
     start.classList.add('hidden')
-    board.classList.remove('hidden')
     playAgainDiv.classList.add('hidden')
     totalScore.classList.add('hidden')
     loseDiv.classList.add('hidden')
+    loseDiv.classList.add('hidden')
+    introDiv.classList.add('hidden')
     squares[playerIndex].classList.add('player')
+    grid.classList.remove('hidden')
+    board.classList.remove('hidden')
     addEvents()
   }
 
@@ -75,14 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
     clearClass('boom')
     clearClass('player')
     aliens = alienStart.slice()
-    console.log('endgame running')
     clearInterval(aliensInterval)
+    //clearInterval(moveAliens) - pretty sure the above is already clearing this
     clearInterval(randomAlienInterval)
-    clearInterval(moveAliens)
     removeEvents()
     grid.classList.add('hidden')
     board.classList.add('hidden')
-    start.innerText = 'Click here to play'
+    // start.innerText = 'Click here to play'
+    console.log('endgame running')
   }
 
 
