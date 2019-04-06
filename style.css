@@ -8,35 +8,44 @@ body {
   height: 100vh;
   justify-content: center;
   flex-direction: column;
-  margin: 0;
-  padding: 30px;
-  /* background: url('images/lucha-libre2.png'), url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
-  background: url('images/lucha-libre2.png');
+  /* background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
+  /* background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
+
+  background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'), url('images/lucha-libre2.png');
+  background-size: 300px 100px;
   background-color: #a9dcfc;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: contain;
-  font-size: 35px;
-  font-family: 'Ultra', serif;
-  color: #FF0046;
+  background-position: right, right;
+  background-repeat: repeat, no-repeat;
+  background-size: contain, contain;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
 }
 
 header {
-  align-items: center;
-  font-size: 90px;
+  align-items: flex-end;
   display: flex;
   height: 30%;
-  flex-wrap: wrap;
-  max-width: 800px;
+  font-size: 35px;
+  padding: 20px;
+  color: #fd0246;
 }
 
 main {
   width: 900px;
   height: 70%;
-  align-items: center;
-  display: flex;
+  align-items: left;
+  display: inline-block;
   justify-content: flex-start;
-  margin: 0;
+  flex-direction: column;
+  line-height: 1.8;
+}
+
+div.intro {
+  /* background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
+  text-align: center;
+  padding: 20px;
+  margin: 10px;
+  border: 3px dashed #fd0246;
 }
 
 .grid {
@@ -61,11 +70,9 @@ main {
 
 .start {
   border: 1px solid black;
-  border-radius: 50px;
-  padding: 15px;
-  box-shadow: 1px 5px #4482ac;
-  font-size: 35px;
-  font-family: 'Ultra', serif;
+  padding: 25px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
 }
 
 .play-again-container div {
@@ -89,7 +96,7 @@ main {
 }
 
 .bomb {
-  background: url('images/skull.png');
+  background: url('images/dead.png');
 }
 
 .explode {
@@ -109,6 +116,7 @@ main {
   border-radius: 50px;
   padding: 15px;
   box-shadow: 1px 5px #4482ac;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .play-again:hover {
@@ -119,6 +127,9 @@ main {
   text-decoration: underline;
 }
 
-button:focus {
-  outline: 0;
+button {
+  margin: 20px;
+  background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif');
+  color: white;
+  border: 3px dashed #fd0246;
 }
