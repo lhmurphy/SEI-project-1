@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function livesLost() {
     // decrease lives by 1 each time
     playerLives--
-    // show current lives on screen
+    // show s lives on screen
     playerLivesDiv.innerHTML = playerLives
     squares[playerIndex].classList.add('boom')
     setTimeout(() => {

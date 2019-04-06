@@ -10,6 +10,7 @@ body {
   flex-direction: column;
   margin: 0;
   padding: 30px;
+  /* background: url('images/lucha-libre2.png'), url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
   background: url('images/lucha-libre2.png');
   background-color: #a9dcfc;
   background-position: right;
@@ -88,7 +89,7 @@ main {
 }
 
 .bomb {
-  background: url('images/bomb.png');
+  background: url('images/skull.png');
 }
 
 .explode {
@@ -116,4 +117,8 @@ main {
 
 .alien-army {
   text-decoration: underline;
+}
+
+button:focus {
+  outline: 0;
 }
