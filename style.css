@@ -8,9 +8,13 @@ body {
   height: 100vh;
   justify-content: center;
   flex-direction: column;
-  background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif');
+  background: url('images/lucha-libre2.png'), url('images/planet2.png'), url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif');
+  background-position: right, left, center;
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-size: 30%, 100%, auto;
   font-family: 'Press Start 2P', cursive;
   color: white;
+  background-color: black;
   flex-wrap: wrap;
 }
 
@@ -18,43 +22,33 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30%;
-  font-size: 35px;
-  padding: 20px;
+  /* background: url('https://media.giphy.com/media/xT4ApnyPkEjNb5QLWE/giphy.gif') */
+  margin: auto;
+  width: 900px;
+  font-size: 30px;
+  padding-top: 100px;
   color: #fd0246;
 }
 
 main {
   display: flex;
-  width: 900px;
-  height: 70%;
-  align-items: center;
-  /* align-items: left; */
-  /* display: inline-block; */
-  /* justify-content: flex-start; */
-  flex-direction: column;
-  line-height: 1.8;
+  justify-content: center;
+  margin:auto;
+  width: 700px;
+  height: 80%;
+  line-height: 1.4;
   flex-wrap: wrap;
+  font-size: 15px;
 }
 
 div.intro {
-  /* background: url('https://media.giphy.com/media/UYBDCJjwOd9Re/giphy.gif'); */
   text-align: center;
+  justify-content: center;
   padding: 20px;
-  margin: 10px;
+  margin: auto;
   border: 3px dashed #fd0246;
-  width: 50%;
-  flex-grow: 1;
-}
+  background-color: black;
 
-.lucha {
-  /* height: 30%; */
-  width: 60%;
-  flex-grow: 2;
-}
-
-img {
- width: 100%;
 }
 
 .grid {
@@ -62,11 +56,10 @@ img {
   display: flex;
   flex-grow: 1;
   flex-wrap: wrap;
-  height: 100%;
-  width: 50%;
   justify-content: right;
-  max-height: 600px;
-  max-width: 850px;
+  height: 300px;
+  width: 300px;
+  margin: auto;
 }
 
 .grid div {
@@ -76,22 +69,22 @@ img {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  /* border: 1px solid white; */
 }
 
-/* .start {
-  border: 1px solid black;
-  padding: 25px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 20px;
-} */
+.play-screen {
+  width: 700px;
+  height: 70%;
+}
 
 .play-again-container div {
   padding: 20px;
 }
-/*
+
+
 .start:hover {
-  background-color: #eeeeee;
-} */
+  cursor: pointer;
+}
 
 .alien {
   background: url('images/blue-mask.png');
@@ -106,7 +99,7 @@ img {
 }
 
 .bomb {
-  background: url('images/dead.png');
+  background: url('images/skull.png');
 }
 
 .explode {
@@ -122,11 +115,10 @@ img {
 }
 
 .play-again {
-  border: 1px solid black;
-  border-radius: 50px;
+  border: 3px dashed #fd0246;
   padding: 15px;
-  box-shadow: 1px 5px #4482ac;
   font-family: 'Press Start 2P', cursive;
+  text-align: center;
 }
 
 .play-again:hover {
@@ -139,14 +131,13 @@ img {
 
 .start {
   width: 400px;
+  background-color: black;
   text-align: center;
-  /* justify-content: center;
-  align-items: center; */
-  border: 1px solid black;
+  justify-content: center;
   padding: 25px;
   font-family: 'Press Start 2P', cursive;
-  font-size: 20px;
-  margin: 20px;
+  font-size: 15px;
+  margin-bottom: auto;
   color: white;
   border: 3px dashed #fd0246;
 }

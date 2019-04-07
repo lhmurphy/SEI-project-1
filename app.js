@@ -10,19 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const playerLivesDiv = document.querySelector('.lives')
   const introDiv = document.querySelector('.intro')
   const width = 16
-  const height = 8
+  const height = 10
   const squares = []
-  const alienMovement = [1, 1, 1, 1, width, -1, -1, -1, -1, width]
+  const alienMovement = [1, 1, 1, 1, 1, 1, width, -1, -1, -1, -1, -1, -1, width]
   const alienStart = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-    16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-    32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+    32, 33, 34, 35, 36, 37, 38, 39, 40, 41
   ]
   let gameInPlay = false
   let currentMove = 0
   let randomAlienInterval
   let aliensInterval
-  let playerIndex = 120
+  let playerIndex = 150
   let score = 0
   let playerLives = 3
   let aliens = alienStart.slice()
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setAlienClass() {
     aliens.forEach(alienIndex => {
-      console.log('toggling alien on ', alienIndex)
+      // console.log('toggling alien on ', alienIndex)
       squares[alienIndex].classList.toggle('alien')
     })
   }
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     clearClass('boom')
     clearClass('player')
     setAlienClass()
-    aliensInterval = setInterval(moveAliens, 800)
-    randomAlienInterval = setInterval(alienBombs, 1000)
-    playerIndex = 120
+    aliensInterval = setInterval(moveAliens, 600)
+    randomAlienInterval = setInterval(alienBombs, 800)
+    playerIndex = 152
     score = 0
     playerLives = 3
     currentMove = 0
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[playerIndex].classList.add('player')
     grid.classList.remove('hidden')
     board.classList.remove('hidden')
+    board.classList.remove('hidden')
     addEvents()
   }
 
@@ -79,13 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
     clearClass('player')
     aliens = alienStart.slice()
     clearInterval(aliensInterval)
-    //clearInterval(moveAliens) - pretty sure the above is already clearing this
     clearInterval(randomAlienInterval)
     removeEvents()
     grid.classList.add('hidden')
     board.classList.add('hidden')
-    // start.innerText = 'Click here to play'
-    console.log('endgame running')
+    // console.log('endgame running')
   }
 
 
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //=========PLAYER=========
 
-  // add player class to player index of 120 (hard coded in variables)
   squares[playerIndex].classList.add('player')
   // find the square that contains player then remove it and add at the new playerIndex
   function playerMove(){
@@ -193,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // if some of the aliens reach the furthest most point in the grid, then end the game
     if(aliens.some(alien => alien >= 111)) {
-      console.log('aliens reached bottom')
+      // console.log('aliens reached bottom')
       playAgainDiv.classList.remove('hidden')
       totalScore.classList.remove('hidden')
       loseDiv.innerText = 'You lost!'
@@ -231,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function livesLost() {
     // decrease lives by 1 each time
     playerLives--
+    console.log(playerLives)
     // show s lives on screen
     playerLivesDiv.innerHTML = playerLives
     squares[playerIndex].classList.add('boom')
@@ -247,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bombInterval = setInterval(() => {
       if(!gameInPlay) clearInterval(bombInterval)
       // if the randomly selected alien is less than the numbers on the grid (it appears on the grid)
-      if(randomAlien <= 127) {
+      if(randomAlien <= 159) {
         // remove the bomb
         squares[randomAlien].classList.remove('bomb')
         // inscreade the alien by width (make it do down one row each time)
